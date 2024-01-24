@@ -1,0 +1,62 @@
+﻿@model IEnumerable<eLibraryUI.Models.Publishers>
+
+@{
+    ViewData["PageTitle"] = "Publishers List";
+    ViewData["PageActionText"] = "+ New Publisher";
+    ViewData["PageActionUrl"] = "/Publisher/AddOrEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12 widget p-5">
+        <table class="table table-borderless" style="color: #fff;">
+            <thead>
+                <tr class="border-bottom">
+                    <th>
+                        Publisher Name
+                    </th>
+                    <th>
+                        Phone Number
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th class="text-center"> Actions</th>
+                </t>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PublisherName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td style="text-decoration: none !important;">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td class="d-flex" width="120px">
+                            @Html.ActionLink("Edit", "AddOrEdit", new {  id=item.PublisherID }, new { @class = "btn btn-outline-info btn-sm mx-1 px-4" }) |
+                            <form action="/Publisher/Delete/@item.PublisherID" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-outline-danger btn-sm mx-1 px-3"
+                                        onclick="return confirm(&quot;Are you sure to delete this record&quot;)">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @*<div class="col-md-5">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>*@
+</div>
+

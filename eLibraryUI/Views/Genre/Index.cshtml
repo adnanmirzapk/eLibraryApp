@@ -1,0 +1,50 @@
+﻿@model IEnumerable<eLibraryUI.Models.Genres>
+
+@{
+    ViewData["PageTitle"] = "Genre List";
+    ViewData["PageActionText"] = "+ New Genre";
+    ViewData["PageActionUrl"] = "/Genre/AddOrEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-6 widget p-5">
+        <table class="table table-borderless" style="color: #fff;">
+            <thead class="border-bottom">
+                <tr>
+                    <th>
+                        Genre Name
+                    </th>
+                    <th class="text-center" width="150px"> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GenreName)
+                        </td>
+                        <td class="d-flex">
+                            @Html.ActionLink("Edit", "AddOrEdit", new {  id=item.GenreID }, new { @class = "btn btn-outline-info btn-sm mx-1 px-4" }) |
+                            <form action="/Genre/Delete/@item.GenreID" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-outline-danger btn-sm mx-1 px-3"
+                                        onclick="return confirm(&quot;Are you sure to delete this record&quot;)">
+                                Delete
+                            </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,51 @@
+﻿@model eLibraryUI.Models.Publishers
+
+@{
+    ViewData["PageTitle"] = Model.PublisherID == 0 ? "Add a new publisher" : "Edit a publisher";
+    ViewData["PageActionText"] = "<< Back to List";
+    ViewData["PageActionUrl"] = "/Publisher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="row mt-5">
+    <div class="col-md-5 widget justify-content-center align-items-center p-5">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="PublisherID" value="@Model.PublisherID" />
+
+            <div class="form-group mb-3">
+                <label asp-for="PublisherName" class="control-label"></label>
+                <input asp-for="PublisherName" class="form-control" />
+                <span asp-validation-for="PublisherName" class="text-danger"> @TempData["PublisherAlreadyExists"]</span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Save Publisher" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,54 @@
+﻿@model eLibraryUI.Models.Authors
+
+@{
+    ViewData["PageTitle"] = Model.AuthorID == 0 ? "Add a new author" : "Edit author";
+    ViewData["PageActionText"] = "<< Back to List";
+    ViewData["PageActionUrl"] = "/Author";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    
+<hr />
+<div class="row mt-5">
+    <div class="col-md-5 widget justify-content-center align-items-center p-5">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="AuthorID" value="@Model.AuthorID" />
+            
+            <div class="form-group mb-3">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger">@TempData["AuthorFirstNameAlreadyExists"]</span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger">@TempData["AuthorLastNameAlreadyExists"]</span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" type="Date" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Nationality" class="control-label"></label>
+                <input asp-for="Nationality" class="form-control" />
+                <span asp-validation-for="Nationality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save Author" class="btn btn-success" />
+            </div>
+            @*@Html.Raw(TempData["AuthorAlreadyExists"])*@
+        </form>
+    </div>
+    <div class="col md-6">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<eLibraryUI.Models.Borrowers>
+
+@{
+    ViewData["PageTitle"] = "Borrower's List";
+    ViewData["PageActionText"] = "+ New Borrower";
+    ViewData["PageActionUrl"] = "/Borrower/AddOrEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="widget p-5">
+<table class="table table-borderless" style="color: #fff;" >
+    <thead>
+        <tr class="border-bottom">
+            <th>
+                Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Email
+            </th>
+            <th class="text-center"> Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GetBorrowerFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td class="d-flex" width="130px">
+                @Html.ActionLink("Edit", "AddOrEdit", new {  id=item.BorrowerID }, new {@class ="btn btn-outline-info btn-sm mx-1 px-4" }) |
+                <form action="/Borrower/Delete/@item.BorrowerID" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-outline-danger btn-sm mx-1 px-3"
+                        onclick="return confirm(&quot;Are you sure to delete the record&quot;)">Delete</button> 
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ </div>

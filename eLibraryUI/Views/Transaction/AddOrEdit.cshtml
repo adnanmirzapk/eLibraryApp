@@ -1,0 +1,80 @@
+﻿@model eLibraryUI.Models.Transactions
+
+@{
+    ViewData["PageTitle"] = @Model.TransactionID == 0 ? "Add a new transaction" : "Edit transaction details";
+    ViewData["PageActionText"] = "<< Back To List";
+    ViewData["PageActionUrl"] = "/Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-6 widget p-5">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="TransactionID" value="@Model.TransactionID" />
+            
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group mb-3">
+                        <label class="control-label"> Borrower</label>
+                        @Html.DropDownListFor(model => model.BorrowerID, ViewBag.BorrowerList as SelectList, "Select Borrower", new {@class = "form-select"})
+                        <span asp-validation-for="BorrowerID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-7">
+
+                </div>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label class="control-label">Book Details</label>
+                @Html.DropDownListFor(model => model.BookID, ViewBag.BookList as SelectList, "Select Book", new {@class = "form-select"})
+                <span asp-validation-for="BookID" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="BorrowDate" class="control-label"></label>
+                        <input asp-for="BorrowDate" type="date" format="dd-MMM-yyyy" class="form-control" />
+                        <span asp-validation-for="BorrowDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="DueDate" class="control-label"></label>
+                        <input asp-for="DueDate" type="date" format="dd-MMM-yyyy" class="form-control" />
+                        <span asp-validation-for="DueDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <label asp-for="ReturnDate" class="control-label"></label>
+                        <input asp-for="ReturnDate" type="date" asp-format="dd-MMM-yyyy" class="form-control" />
+                        <span asp-validation-for="ReturnDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save Transaction Details" class="btn btn-success btn-lg" />
+            </div>
+        </form>
+    </div>
+    <div class="col md-6">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

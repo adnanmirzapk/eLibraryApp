@@ -1,0 +1,76 @@
+﻿@model eLibraryUI.Models.Users
+
+@{
+    ViewData["PageTitle"] = Model.UserID == 0 ? "Add a new user" : "Edit user";
+    ViewData["PageActionText"] = "<< Back To List";
+    ViewData["PageActionUrl"] = "/User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-6 widget p-5">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="UserID" value="@Model.UserID" />
+            <div class="form-group mb-3">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label"> Borrower </label>
+                @Html.DropDownListFor(model => model.BorrowerID, ViewBag.BorrowersList as SelectList, "Select Borrower", new {@class = "form-select", id = "ddlBrorrowerList"})
+                @*<span asp-validation-for="BorrowerID" class="text-danger"></span>*@
+            </div>
+            <div class="form-group form-check mb-3">
+                <label class="form-check-label">
+                        <input id="isstaff" onclick="enableddl()" class="form-check-input" asp-for="IsStaff" /> @Html.DisplayNameFor(model => model.IsStaff)
+                </label>
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="EmployeeID" class="control-label"></label>
+                @Html.DropDownListFor(model => model.EmployeeID, ViewBag.EmployeeList as SelectList, "Select Employee", new {@class = "form-select", id = "ddlEmployeeList", disabled = "true"})
+                <span asp-validation-for="EmployeeID" class="text-danger"></span>
+            </div>
+            <div class="text-danger mb-3">
+                <label>@TempData["IfUserExists"]</label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save User Details" class="btn btn-success btn-lg" />
+            </div>
+        </form>
+    </div>
+    <div class="col md-6">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    function enableddl(){
+        var ddlEmployee = document.getElementById("ddlEmployeeList");
+        var ddlBorrower = document.getElementById("ddlBrorrowerList")
+        var isStaff = document.getElementById("isstaff");
+
+        if(isStaff.checked) {
+            ddlEmployee.removeAttribute("disabled");
+            ddlBorrower.setAttribute("disabled", "false");
+        }
+         else {
+            ddlEmployee.setAttribute("disabled", "true");
+            ddlBorrower.removeAttribute("disabled");
+         }
+    }
+</script>

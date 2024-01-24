@@ -1,0 +1,83 @@
+﻿@model IEnumerable<eLibraryUI.Models.Books>
+
+
+@{
+    ViewData["PageTitle"] = "Index";
+    ViewData["PageActionText"] = "+ New Book";
+    ViewData["PageActionUrl"] = "/Book/AddOrEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<table class="table table-borderless" style="color: #fff;">
+    <thead>
+        <tr class="border-bottom text-center">
+            <th>
+                Book Title
+            </th>
+            <th>
+                ISBN
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+                Published Date
+            </th>
+            <th>
+                Total Copies
+            </th>
+            <th>
+                Available Copies
+            </th>
+            <th>
+                Publisher
+            </th>
+            <th>
+                Author
+            </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+@foreach (var item in Model) {
+        <tr class="text-center">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GetGenreName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCopies)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableCopies)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GetPhblisherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GetAuthorName)
+            </td>
+                <td class="d-flex" width="150px">
+                @Html.ActionLink("Edit", "AddOrEdit", new {  id=item.BookID }, new { @class = "btn btn-outline-info btn-sm mx-1 px-4" }) |
+                <form action="/Book/Delete/@item.BookID" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline-danger btn-sm mx-1 px-3"
+                                onclick="return confirm(&quot;Are you sure to delete this record&quot;)">
+                            Delete
+                        </button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

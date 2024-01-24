@@ -1,0 +1,41 @@
+﻿@model eLibraryUI.Models.Genres
+
+@{
+    ViewData["PageTitle"] = Model.GenreID == 0 ? "Add a genre" : "Edit genre";
+    ViewData["PageActionText"] = "<< Back To List";
+    ViewData["PageActionUrl"] = "/Genre";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="GenreID" value="@Model.GenreID" />
+            <div class="form-group mt-3">
+                <label asp-for="GenreName" class="control-label"></label>
+                <input asp-for="GenreName" class="form-control" />
+                <span asp-validation-for="GenreName" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label class="text-danger mb-3">@TempData["IfGenreExists"]</label>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Save Genre" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

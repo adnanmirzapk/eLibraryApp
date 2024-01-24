@@ -1,0 +1,48 @@
+﻿@model eLibraryUI.Models.Users
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 widget p-5">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-10 p-5">
+                    <form asp-action="Login">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="UserName" class="control-label"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check mb-4">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsStaff" /> @Html.DisplayNameFor(model => model.IsStaff)
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <label class="text-danger">@TempData["WrongCredentials"]</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn btn-success btn-lg" />
+                        </div>
+                    </form>
+                 </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

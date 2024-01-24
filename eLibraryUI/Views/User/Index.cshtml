@@ -1,0 +1,66 @@
+﻿@model IEnumerable<eLibraryUI.Models.Users>
+
+@{
+    ViewData["PageTitle"] = "User List";
+    ViewData["PageActionText"] = "+ New User";
+    ViewData["PageActionUrl"] = "/User/AddOrEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-7">
+        <div class="widget p-5">
+            <table class="table table-borderless" style="color: #fff">
+                <thead>
+                    <tr>
+                        <th>
+                            User Name
+                        </th>
+                        <th>
+                            Borrower
+                        </th>
+                        <th>
+                            Is Staff
+                        </th>
+                        <th>
+                            Employee
+                        </th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BorrowerID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsStaff)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeID)
+                            </td>
+                            <td class="d-flex" width="100px">
+                                @Html.ActionLink("Edit", "AddOrEdit", new {  id=item.UserID }, new { @class = "btn btn-outline-info btn-sm mx-1 px-4"}) |
+                                <form action="/User/Delete/@item.UserID" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-danger btn-sm mx-1 px-3"
+                                        onclick="return confirm(&quot;Are you sure to delete this record&quot;)">Delete</button>    
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="col md-5">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<eLibraryUI.Models.Transactions>
+
+@{
+    ViewData["PageTitle"] = "Transaction List";
+    ViewData["PageActionText"] = "+ New Transaction";
+    ViewData["PageActionUrl"] = "/Transaction/AddOrEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="widget p-5">
+<table class="table table-borderless" style="color: #fff;">
+    <thead>
+        <tr class="border-bottom">
+            <th>
+                Borrower Name
+            </th>
+            <th>
+                Book Name
+            </th>
+            <th>
+               Borrow Date
+            </th>
+            <th>
+                Due Date
+            </th>
+            <th>
+                Return Date
+            </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GetBorrowerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GetBookName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td class="d-flex" width="130px">
+                @Html.ActionLink("Edit", "AddOrEdit", new {  id=item.TransactionID }, new { @class = "btn btn-outline-info btn-sm mx-1 px-4"}) |
+                <form action="/Transaction/Delete/@item.TransactionID" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-outline-danger btn-sm mx-1 px-3"
+                        onclick = "return confirm(&quot;Are you sure to delete the record&quot;)">
+                       Delete
+                   </button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

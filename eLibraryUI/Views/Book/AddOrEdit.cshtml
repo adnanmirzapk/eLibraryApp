@@ -1,0 +1,111 @@
+﻿@model eLibraryUI.Models.Books
+
+@{
+    ViewData["PageTitle"] = Model.BookID == 0 ? "Add a new book" : "Edit book details";
+    ViewData["PageActionText"] = "<< Back To List";
+    ViewData["PageActionUrl"] = "/Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<hr />
+<div class="row">
+    <div class="col-md-7 widget p-5">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="BookID" value="@Model.BookID" />
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="ISBN" class="control-label"></label>
+                        <input asp-for="ISBN" class="form-control" />
+                        <span asp-validation-for="ISBN" class="text-danger"></span>
+                    </div>
+            </div>
+            <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="control-label"> Select Genre </label>
+                        @Html.DropDownListFor(model => model.GenreID, ViewBag.GenreList as SelectList , "Select Genre", new {@class = "form-select"} )
+                        <span asp-validation-for="GenreID" class="text-danger"></span>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="PublishedDate" class="control-label"></label>
+                        <input asp-for="PublishedDate" type="date" format="dd-MMM-yyyy" class="form-control" />
+                        <span asp-validation-for="PublishedDate" class="text-danger"></span>
+                    </div>
+            </div>
+        </div>
+
+            <div class="row">
+                <div class="col-md-4">
+
+                    <div class="form-group mb-3">
+                        <label asp-for="TotalCopies" class="control-label"></label>
+                        <input asp-for="TotalCopies" min="0" class="form-control" />
+                        <span asp-validation-for="TotalCopies" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label asp-for="AvailableCopies" class="control-label"></label>
+                        <input asp-for="AvailableCopies" min="0" class="form-control" />
+                        <span asp-validation-for="AvailableCopies" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label asp-for="TotalPages" class="control-label"></label>
+                        <input asp-for="TotalPages" class="form-control" />
+                        <span asp-validation-for="TotalPages" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+ 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="control-label">Select Publisher</label>
+                        @Html.DropDownListFor(model => model.PublisherID, ViewBag.PublisherList as SelectList, "Select Publisher", new {@class = "form-select"})
+                        <span asp-validation-for="PublisherID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="control-label">Select Author</label>
+                        @Html.DropDownListFor(model => model.AuthorID, ViewBag.AuthorList as SelectList, "Select Author", new {@class = "form-select"})
+                        <span asp-validation-for="AuthorID" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 justify-centent-center align-items-center">
+                    <div class="form-group">
+                        <input type="submit" value="Save Book Details" class="btn btn-success btn-lg" />
+                    </div>
+                </div>
+                
+            </div>
+            
+        </form>
+    </div>
+    <div class="col md-5">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
